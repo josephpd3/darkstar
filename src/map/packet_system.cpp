@@ -2654,7 +2654,20 @@ void SmallPacket0x058(map_session_data_t* session, CCharEntity* PChar, CBasicPac
         }
     }
 
-    std::string Query = "SELECT ID FROM synth_recipes WHERE Alchemy = %u and Bone = %u and Cloth = %u and Cook <= %u and Gold = %u and Leather = %u and Smith = %u and Wood = %u;";
+    ShowDebug(
+        CL_CYAN"SmallPacket0x058: Searching for recipe suggestions for character %s based on requirements: Alchemy <= %u and Bone <= %u and Cloth <= %u and Cook <= %u and Gold <= %u and Leather <= %u and Smith <= %u and Wood <= %u\n" CL_RESET,
+        PChar->GetName(),
+        suggestionSkillRequirements[0],
+        suggestionSkillRequirements[1],
+        suggestionSkillRequirements[2],
+        suggestionSkillRequirements[3],
+        suggestionSkillRequirements[4],
+        suggestionSkillRequirements[5],
+        suggestionSkillRequirements[6],
+        suggestionSkillRequirements[7]
+    );
+
+    std::string Query = "SELECT ID FROM synth_recipes WHERE Alchemy <= %u and Bone <= %u and Cloth <= %u and Cook <= %u and Gold <= %u and Leather <= %u and Smith <= %u and Wood <= %u;";
 
     int32 ret = Sql_Query(
         SqlHandle,
@@ -2672,6 +2685,9 @@ void SmallPacket0x058(map_session_data_t* session, CCharEntity* PChar, CBasicPac
     if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) > 0)
     {
         uint64 numRows = Sql_NumRows(SqlHandle);
+
+        ShowDebug(CL_CYAN"SmallPacket0x058: Found %u recipe suggestions for character %s\n" CL_RESET, PChar->GetName());
+
         uint64 recipeToSuggest = dsprand::GetRandomNumber(numRows);
 
         for (uint64 i; i < numRows; i++)
