@@ -2686,7 +2686,7 @@ void SmallPacket0x058(map_session_data_t* session, CCharEntity* PChar, CBasicPac
     {
         uint64 numRows = Sql_NumRows(SqlHandle);
 
-        ShowDebug(CL_CYAN"SmallPacket0x058: Found %u recipe suggestions for character %s\n" CL_RESET, PChar->GetName());
+        ShowDebug(CL_CYAN"SmallPacket0x058: Found %u recipe suggestions for character %s\n" CL_RESET, numRows, PChar->GetName());
 
         uint64 recipeToSuggest = dsprand::GetRandomNumber(numRows);
 
