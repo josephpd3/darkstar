@@ -2642,7 +2642,7 @@ void SmallPacket0x058(map_session_data_t* session, CCharEntity* PChar, CBasicPac
     uint16 skillID = data.ref<uint16>(0x04);
     uint16 skillLevel = data.ref<uint16>(0x06);
 
-    ShowDebug(CL_CYAN"SmallPacket0x058: Looking up synthesis suggestions for character %s for skillID %u and skillLevel %u\n" CL_RESET, skillID, skillLevel, PChar->GetName());
+    ShowDebug(CL_CYAN"SmallPacket0x058: Looking up synthesis suggestions for character %s for skillID %u and skillLevel %u\n" CL_RESET, PChar->GetName(), skillID, skillLevel);
 
     for (auto i = 0; i < 8; i++)
     {
