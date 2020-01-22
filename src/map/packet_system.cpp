@@ -2662,10 +2662,11 @@ void SmallPacket0x058(map_session_data_t* session, CCharEntity* PChar, CBasicPac
     // Construct query for recipes
     for (auto i = 0; i < 8; i++)
     {
+        skillColumnName = guildSkillColumnNames[i];
+
         if (guildSkillColumns[i] == guildID)
         {
             levelCapForSkill = skillLevel + 10;
-            skillColumnName = guildSkillColumnNames[guildID];
 
             // We want an item below cap, but above level 0 for the current guild, which keeps weird, special recipes of all 0 requirements out of the pecking order
             query += fmt::sprintf(
@@ -2681,7 +2682,7 @@ void SmallPacket0x058(map_session_data_t* session, CCharEntity* PChar, CBasicPac
         else
         {
             levelCapForSkill = 0;
-            skillColumnName = guildSkillColumnNames[guildSkillColumns[i]];
+
             query += fmt::sprintf(
                 "%s <= %s",
                 (const int8*)skillColumnName.c_str(),
@@ -2694,6 +2695,9 @@ void SmallPacket0x058(map_session_data_t* session, CCharEntity* PChar, CBasicPac
     }
 
     query += ";";
+
+
+    ShowDebug(CL_CYAN"SUBMITTING QUERY" CL_RESET);
 
     int32 ret = Sql_QueryStr(SqlHandle, query.c_str());
 
