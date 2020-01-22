@@ -2633,9 +2633,61 @@ void SmallPacket0x053(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 
 void SmallPacket0x058(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
 {
-    // uint16 skillID = data.ref<uint16>(0x04);
-    // uint16 skillLevel = data.ref<uint16>(0x06);
-    //PChar->pushPacket(new CSynthSuggestionPacket(recipeID));
+    // TODO: Suggest recipes with subcraft requirements once a sufficient level in primary craft is reached to diversify suggestions given
+
+    uint16 skillColumns[] = {55, 54, 52, 56, 51, 53, 50, 49};
+    uint16 suggestionSkillRequirements[8];
+    uint16 recipeID;
+
+    uint16 skillID = data.ref<uint16>(0x04);
+    uint16 skillLevel = data.ref<uint16>(0x06);
+
+    for (auto i = 0; i < 8; i++)
+    {
+        if (skillColumns[i] == skillID)
+        {
+            suggestionSkillRequirements[i] = skillLevel + 10;
+        }
+        else
+        {
+            suggestionSkillRequirements[i] = 0;
+        }
+    }
+
+    std::string Query = "SELECT ID FROM synth_recipes WHERE Alchemy = %u and Bone = %u and Cloth = %u and Cook <= %u and Gold = %u and Leather = %u and Smith = %u and Wood = %u;";
+
+    int32 ret = Sql_Query(
+        SqlHandle,
+        Query.c_str(),
+        suggestionSkillRequirements[0],
+        suggestionSkillRequirements[1],
+        suggestionSkillRequirements[2],
+        suggestionSkillRequirements[3],
+        suggestionSkillRequirements[4],
+        suggestionSkillRequirements[5],
+        suggestionSkillRequirements[6],
+        suggestionSkillRequirements[7]
+    );
+
+    if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) > 0)
+    {
+        uint64 numRows = Sql_NumRows(SqlHandle);
+        uint64 recipeToSuggest = dsprand::GetRandomNumber(numRows);
+
+        for (uint64 i; i < numRows; i++)
+        {
+            if (Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+            {
+                if (i == recipeToSuggest)
+                {
+                    recipeID = Sql_GetUIntData(SqlHandle, 0);
+                    break;
+                }
+            }
+        }
+    }
+
+    PChar->pushPacket(new CSynthSuggestionPacket(recipeID));
 }
 
 /************************************************************************
