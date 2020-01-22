@@ -2675,7 +2675,7 @@ void SmallPacket0x058(map_session_data_t* session, CCharEntity* PChar, CBasicPac
                 (const int8*)std::to_string(levelCapForSkill).c_str()
             );
             query += fmt::sprintf(
-                "%s > 0",
+                " AND %s > 0",
                 (const int8*)skillColumnName.c_str()
             );
         }
