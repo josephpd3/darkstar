@@ -2669,7 +2669,7 @@ void SmallPacket0x058(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 
             // We want an item below cap, but above level 0 for the current guild, which keeps weird, special recipes of all 0 requirements out of the pecking order
             query += fmt::sprintf("%s <= %u", skillColumnName, levelCapForSkill);
-            query += fmt::sprintf("%s > 0");
+            query += fmt::sprintf("%s > 0", skillColumnName);
         }
         else
         {
