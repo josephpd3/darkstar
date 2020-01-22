@@ -20,6 +20,7 @@ This file is part of DarkStar-server source code.
 
 ===========================================================================
 */
+#include <unordered_map>
 
 #include "../../common/socket.h"
 #include "../map.h"
@@ -31,6 +32,10 @@ CSynthSuggestionPacket::CSynthSuggestionPacket(uint32 synthID)
 {
 	this->type = 0x31;
 	this->size = 0x1A;
+
+	uint16 itemAmount;
+	std::unordered_map<uint16, int>::const_iterator columnAmountByteIter;
+	int columnAmountByte;
 
 	const char* fmtQuery =
 
@@ -44,6 +49,30 @@ CSynthSuggestionPacket::CSynthSuggestionPacket(uint32 synthID)
 		SqlHandle,
 		fmtQuery,
 		synthID);
+
+	/*
+	static const std::unordered_map<char, vector<char>> num_chars = {
+    {'2', {'a', 'b', 'c'}},
+    {'3', {'e', 'd', 'f'}},
+    {'4', {'g', 'h', 'i'}},
+    {'5', {'j', 'k', 'l'}},
+    {'6', {'m', 'n', 'o'}},
+    {'7', {'p', 'q', 'r', 's'}},
+    {'8', {'t', 'u', 'v'}},
+    {'9', {'w', 'x', 'y', 'z'}}
+};
+	*/
+
+	static const std::unordered_map<uint16, int> ingredientColumnToAmountByteMap = {
+		{11, 0x20},
+		{12, 0x22},
+		{13, 0x24},
+		{14, 0x26},
+		{15, 0x28},
+		{16, 0x2A},
+		{17, 0x2C},
+		{18, 0x2E}
+	};
 
 	if (ret != SQL_ERROR &&
 		Sql_NumRows(SqlHandle) != 0 &&
@@ -61,15 +90,27 @@ CSynthSuggestionPacket::CSynthSuggestionPacket(uint32 synthID)
 		ref<uint16>(0x1A) = Sql_GetUIntData(SqlHandle,16);
 		ref<uint16>(0x1C) = Sql_GetUIntData(SqlHandle,17);
 		ref<uint16>(0x1E) = Sql_GetUIntData(SqlHandle,18);
-		//TODO: words 0x20 through 0x2E are the quantity per material
-		ref<uint16>(0x20) = Sql_GetUIntData(SqlHandle,11) ? 1 : 0;
-		ref<uint16>(0x22) = Sql_GetUIntData(SqlHandle,11) ? 1 : 0;
-		ref<uint16>(0x24) = Sql_GetUIntData(SqlHandle,11) ? 1 : 0;
-		ref<uint16>(0x26) = Sql_GetUIntData(SqlHandle,11) ? 1 : 0;
-		ref<uint16>(0x28) = Sql_GetUIntData(SqlHandle,11) ? 1 : 0;
-		ref<uint16>(0x2A) = Sql_GetUIntData(SqlHandle,11) ? 1 : 0;
-		ref<uint16>(0x2C) = Sql_GetUIntData(SqlHandle,11) ? 1 : 0;
-		ref<uint16>(0x2E) = Sql_GetUIntData(SqlHandle,11) ? 1 : 0;
+		// words 0x20 through 0x2E are the quantity per material
+		for (uint16 col = 11; col < 19; col++)
+		{
+			itemAmount = 0;
+			columnAmountByteIter = ingredientColumnToAmountByteMap.find(col);
+			columnAmountByte = (*columnAmountByteIter).second;
+
+			if (Sql_GetUIntData(SqlHandle, col) == 0)
+				continue;
+			else
+				itemAmount++;
+
+			uint16 ingredientID = Sql_GetUIntData(SqlHandle, (size_t)col);
+
+			for (uint16 other_col = 11; other_col < 19; other_col++)
+			{
+				if (ingredientID == Sql_GetUIntData(SqlHandle, (size_t)other_col))
+					itemAmount++;
+			}
+			ref<uint16>(columnAmountByte) = itemAmount;
+		}
 		//
 		ref<uint16>(0x30) = 0x01;
 	}
