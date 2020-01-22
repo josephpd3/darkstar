@@ -2668,14 +2668,25 @@ void SmallPacket0x058(map_session_data_t* session, CCharEntity* PChar, CBasicPac
             skillColumnName = guildSkillColumnNames[guildID];
 
             // We want an item below cap, but above level 0 for the current guild, which keeps weird, special recipes of all 0 requirements out of the pecking order
-            query += fmt::sprintf("%s <= %u", skillColumnName, levelCapForSkill);
-            query += fmt::sprintf("%s > 0", skillColumnName);
+            query += fmt::sprintf(
+                "%s <= %s",
+                (const int8*)skillColumnName.c_str(),
+                (const int8*)std::to_string(levelCapForSkill).c_str()
+            );
+            query += fmt::sprintf(
+                "%s > 0",
+                (const int8*)skillColumnName.c_str()
+            );
         }
         else
         {
             levelCapForSkill = 0;
             skillColumnName = guildSkillColumnNames[guildSkillColumns[i]];
-            query += fmt::sprintf("%s <= %u", skillColumnName, levelCapForSkill);
+            query += fmt::sprintf(
+                "%s <= %s",
+                (const int8*)skillColumnName.c_str(),
+                (const int8*)std::to_string(levelCapForSkill).c_str()
+            );
         }
 
         if (i < 7)
