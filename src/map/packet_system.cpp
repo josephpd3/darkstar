@@ -2635,54 +2635,58 @@ void SmallPacket0x058(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 {
     // TODO: Suggest recipes with subcraft requirements once a sufficient level in primary craft is reached to diversify suggestions given
 
-    uint16 skillColumns[] = {55, 54, 52, 56, 51, 53, 50, 49};
-    uint16 suggestionSkillRequirements[8];
-    uint16 recipeID;
+    // ID from packet is guild ID, not skill ID, so we need to map accordingly
+    uint16 guildSkillColumns[] = {7, 6, 4, 8, 3, 5, 2, 1};
+    std::string guildSkillColumnNames[] = {
+        "Alchemy",
+        "Bone",
+        "Cloth",
+        "Cook",
+        "Gold",
+        "Leather",
+        "Smith",
+        "Wood"
+    };
 
-    uint16 skillID = data.ref<uint16>(0x04);
+    uint16 guildID = data.ref<uint16>(0x04);
     uint16 skillLevel = data.ref<uint16>(0x06);
 
-    ShowDebug(CL_CYAN"SmallPacket0x058: Looking up synthesis suggestions for character %s for skillID %u and skillLevel %u\n" CL_RESET, PChar->GetName(), skillID, skillLevel);
+    ShowDebug(CL_CYAN"SmallPacket0x058: Looking up synthesis suggestions for character %s for guildID %u and skillLevel %u\n" CL_RESET, PChar->GetName(), guildID, skillLevel);
 
+    std::string query = "SELECT ID FROM synth_recipes WHERE ";
+
+    // Iter util vars
+    uint16 levelCapForSkill;
+    std::string skillColumnName;
+
+    // Construct query for recipes
     for (auto i = 0; i < 8; i++)
     {
-        if (skillColumns[i] == skillID)
+        if (guildSkillColumns[i] == guildID)
         {
-            suggestionSkillRequirements[i] = skillLevel + 10;
+            levelCapForSkill = skillLevel + 10;
+            skillColumnName = guildSkillColumnNames[guildID];
+
+            // We want an item below cap, but above level 0 for the current guild, which keeps weird, special recipes of all 0 requirements out of the pecking order
+            query += fmt::sprintf("%s <= %u", skillColumnName, levelCapForSkill);
+            query += fmt::sprintf("%s > 0");
         }
         else
         {
-            suggestionSkillRequirements[i] = 0;
+            levelCapForSkill = 0;
+            skillColumnName = guildSkillColumnNames[guildSkillColumns[i]];
+            query += fmt::sprintf("%s <= %u", skillColumnName, levelCapForSkill);
         }
+
+        if (i < 7)
+            query += " AND ";
     }
 
-    ShowDebug(
-        CL_CYAN"SmallPacket0x058: Searching for recipe suggestions for character %s based on requirements: Alchemy <= %u and Bone <= %u and Cloth <= %u and Cook <= %u and Gold <= %u and Leather <= %u and Smith <= %u and Wood <= %u\n" CL_RESET,
-        PChar->GetName(),
-        suggestionSkillRequirements[0],
-        suggestionSkillRequirements[1],
-        suggestionSkillRequirements[2],
-        suggestionSkillRequirements[3],
-        suggestionSkillRequirements[4],
-        suggestionSkillRequirements[5],
-        suggestionSkillRequirements[6],
-        suggestionSkillRequirements[7]
-    );
+    query += ";";
 
-    std::string Query = "SELECT ID FROM synth_recipes WHERE Alchemy <= %u and Bone <= %u and Cloth <= %u and Cook <= %u and Gold <= %u and Leather <= %u and Smith <= %u and Wood <= %u;";
+    int32 ret = Sql_Query(SqlHandle, query.c_str());
 
-    int32 ret = Sql_Query(
-        SqlHandle,
-        Query.c_str(),
-        suggestionSkillRequirements[0],
-        suggestionSkillRequirements[1],
-        suggestionSkillRequirements[2],
-        suggestionSkillRequirements[3],
-        suggestionSkillRequirements[4],
-        suggestionSkillRequirements[5],
-        suggestionSkillRequirements[6],
-        suggestionSkillRequirements[7]
-    );
+    uint16 recipeID;
 
     if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) > 0)
     {
@@ -2703,6 +2707,10 @@ void SmallPacket0x058(map_session_data_t* session, CCharEntity* PChar, CBasicPac
                 }
             }
         }
+    }
+    else
+    {
+        ShowError(CL_RED"SmallPacket0x058: Failed to retrieve suggestions from database" CL_RESET);
     }
 
     PChar->pushPacket(new CSynthSuggestionPacket(recipeID));
