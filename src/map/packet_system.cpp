@@ -2684,7 +2684,7 @@ void SmallPacket0x058(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 
     query += ";";
 
-    int32 ret = Sql_Query(SqlHandle, query.c_str());
+    int32 ret = Sql_QueryStr(SqlHandle, query.c_str());
 
     uint16 recipeID;
 
