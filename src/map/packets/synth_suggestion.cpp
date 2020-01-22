@@ -62,6 +62,15 @@ CSynthSuggestionPacket::CSynthSuggestionPacket(uint32 synthID)
 		ref<uint16>(0x1C) = Sql_GetUIntData(SqlHandle,17);
 		ref<uint16>(0x1E) = Sql_GetUIntData(SqlHandle,18);
 		//TODO: words 0x20 through 0x2E are the quantity per material
+		ref<uint16>(0x20) = Sql_GetUIntData(SqlHandle,11) ? 1 : 0;
+		ref<uint16>(0x22) = Sql_GetUIntData(SqlHandle,11) ? 1 : 0;
+		ref<uint16>(0x24) = Sql_GetUIntData(SqlHandle,11) ? 1 : 0;
+		ref<uint16>(0x26) = Sql_GetUIntData(SqlHandle,11) ? 1 : 0;
+		ref<uint16>(0x28) = Sql_GetUIntData(SqlHandle,11) ? 1 : 0;
+		ref<uint16>(0x2A) = Sql_GetUIntData(SqlHandle,11) ? 1 : 0;
+		ref<uint16>(0x2C) = Sql_GetUIntData(SqlHandle,11) ? 1 : 0;
+		ref<uint16>(0x2E) = Sql_GetUIntData(SqlHandle,11) ? 1 : 0;
+		//
 		ref<uint16>(0x30) = 0x01;
 	}
 }
