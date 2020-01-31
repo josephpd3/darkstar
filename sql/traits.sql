@@ -197,25 +197,159 @@ INSERT INTO `traits` VALUES (14,'store tp',12,70,4,73,25,NULL,0);
 INSERT INTO `traits` VALUES (14,'store tp',12,90,5,73,30,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (15,'double attack',1,25,1,288,10,NULL,0);
 INSERT INTO `traits` VALUES (15,'double attack',1,50,2,288,12,'ROV',0);
-INSERT INTO `traits` VALUES (15,'double attack',1,75,3,288,14,'ABYSSEA',0); -- level 76 prior to ROV update (05/14/2015), set Abby tag so it's removed from 75-cap servers 
+INSERT INTO `traits` VALUES (15,'double attack',1,75,3,288,14,'ABYSSEA',0); -- level 76 prior to ROV update (05/14/2015), set Abby tag so it's removed from 75-cap servers
 INSERT INTO `traits` VALUES (15,'double attack',1,85,4,288,16,'ROV',0);
 INSERT INTO `traits` VALUES (15,'double attack',1,99,5,288,18,'ROV',0);
 INSERT INTO `traits` VALUES (16,'triple attack',6,55,1,302,5,NULL,0);
 INSERT INTO `traits` VALUES (16,'triple attack',6,95,2,302,6,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (17,'counter',2,10,1,291,8,NULL,0);
 INSERT INTO `traits` VALUES (17,'counter',2,81,2,291,12,'ABYSSEA',0);
-INSERT INTO `traits` VALUES (18,'dual wield',6,83,1,259,10,'ABYSSEA',0);
-INSERT INTO `traits` VALUES (18,'dual wield',6,90,2,259,15,'ABYSSEA',0);
-INSERT INTO `traits` VALUES (18,'dual wield',6,98,3,259,25,'ABYSSEA',0);
-INSERT INTO `traits` VALUES (18,'dual wield',13,10,1,259,10,NULL,0);
+-- NOOOOOOOOOOO!
+-- INSERT INTO `traits` VALUES (18,'dual wield',6,83,1,259,10,'ABYSSEA',0);
+-- INSERT INTO `traits` VALUES (18,'dual wield',6,90,2,259,15,'ABYSSEA',0);
+-- INSERT INTO `traits` VALUES (18,'dual wield',6,98,3,259,25,'ABYSSEA',0);
+-- INSERT INTO `traits` VALUES (18,'dual wield',13,10,1,259,10,NULL,0);
+-- INSERT INTO `traits` VALUES (18,'dual wield',13,25,2,259,15,NULL,0);
+-- INSERT INTO `traits` VALUES (18,'dual wield',13,45,3,259,25,NULL,0);
+-- INSERT INTO `traits` VALUES (18,'dual wield',13,65,4,259,30,NULL,0);
+-- INSERT INTO `traits` VALUES (18,'dual wield',13,85,5,259,35,'ABYSSEA',0);
+-- INSERT INTO `traits` VALUES (18,'dual wield',19,20,1,259,10,'ABYSSEA',0);
+-- INSERT INTO `traits` VALUES (18,'dual wield',19,40,2,259,15,'ABYSSEA',0);
+-- INSERT INTO `traits` VALUES (18,'dual wield',19,60,3,259,25,'ABYSSEA',0);
+-- INSERT INTO `traits` VALUES (18,'dual wield',19,80,4,259,30,'ABYSSEA',0);
+--
+-- war
+INSERT INTO `traits` VALUES (18,'dual wield',1,1,1,259,10,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',1,25,2,259,15,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',1,50,3,259,25,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',1,70,3,259,30,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',1,75,4,259,40,NULL,0);
+-- mnk
+INSERT INTO `traits` VALUES (18,'dual wield',2,25,2,259,15,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',2,1,1,259,10,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',2,50,3,259,25,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',2,70,3,259,30,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',2,75,4,259,40,NULL,0);
+-- whm
+INSERT INTO `traits` VALUES (18,'dual wield',3,1,1,259,10,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',3,25,2,259,15,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',3,50,3,259,25,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',3,70,3,259,30,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',3,75,4,259,40,NULL,0);
+-- blm
+INSERT INTO `traits` VALUES (18,'dual wield',4,1,1,259,10,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',4,25,2,259,15,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',4,50,3,259,25,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',4,70,3,259,30,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',4,75,4,259,40,NULL,0);
+-- rdm
+INSERT INTO `traits` VALUES (18,'dual wield',5,1,1,259,10,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',5,25,2,259,15,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',5,50,3,259,25,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',5,70,3,259,30,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',5,75,4,259,40,NULL,0);
+-- thf
+INSERT INTO `traits` VALUES (18,'dual wield',6,1,1,259,10,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',6,25,2,259,15,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',6,50,3,259,25,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',6,70,3,259,30,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',6,75,4,259,40,NULL,0);
+-- pld
+INSERT INTO `traits` VALUES (18,'dual wield',7,1,1,259,10,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',7,25,2,259,15,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',7,50,3,259,25,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',7,70,3,259,30,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',7,75,4,259,40,NULL,0);
+-- drk
+INSERT INTO `traits` VALUES (18,'dual wield',8,1,1,259,10,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',8,25,2,259,15,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',8,50,3,259,25,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',8,70,3,259,30,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',8,75,4,259,40,NULL,0);
+-- bst
+INSERT INTO `traits` VALUES (18,'dual wield',9,1,1,259,10,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',9,25,2,259,15,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',9,50,3,259,25,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',9,70,3,259,30,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',9,75,4,259,40,NULL,0);
+-- brd
+INSERT INTO `traits` VALUES (18,'dual wield',10,1,1,259,10,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',10,25,2,259,15,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',10,50,3,259,25,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',10,70,3,259,30,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',10,75,4,259,40,NULL,0);
+-- rng
+INSERT INTO `traits` VALUES (18,'dual wield',11,1,1,259,10,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',11,25,2,259,15,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',11,50,3,259,25,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',11,70,3,259,30,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',11,75,4,259,40,NULL,0);
+-- sam
+INSERT INTO `traits` VALUES (18,'dual wield',12,1,1,259,10,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',12,25,2,259,15,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',12,50,3,259,25,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',12,70,3,259,30,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',12,75,4,259,40,NULL,0);
+-- nin
+INSERT INTO `traits` VALUES (18,'dual wield',13,1,1,259,10,NULL,0);
 INSERT INTO `traits` VALUES (18,'dual wield',13,25,2,259,15,NULL,0);
-INSERT INTO `traits` VALUES (18,'dual wield',13,45,3,259,25,NULL,0);
-INSERT INTO `traits` VALUES (18,'dual wield',13,65,4,259,30,NULL,0);
-INSERT INTO `traits` VALUES (18,'dual wield',13,85,5,259,35,'ABYSSEA',0);
-INSERT INTO `traits` VALUES (18,'dual wield',19,20,1,259,10,'ABYSSEA',0);
-INSERT INTO `traits` VALUES (18,'dual wield',19,40,2,259,15,'ABYSSEA',0);
-INSERT INTO `traits` VALUES (18,'dual wield',19,60,3,259,25,'ABYSSEA',0);
-INSERT INTO `traits` VALUES (18,'dual wield',19,80,4,259,30,'ABYSSEA',0);
+INSERT INTO `traits` VALUES (18,'dual wield',13,50,3,259,25,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',13,70,3,259,30,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',13,75,4,259,40,NULL,0);
+-- drg
+INSERT INTO `traits` VALUES (18,'dual wield',14,1,1,259,10,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',14,25,2,259,15,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',14,50,3,259,25,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',14,70,3,259,30,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',14,75,4,259,40,NULL,0);
+-- smn
+INSERT INTO `traits` VALUES (18,'dual wield',15,1,1,259,10,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',15,25,2,259,15,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',15,50,3,259,25,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',15,70,3,259,30,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',15,75,4,259,40,NULL,0);
+-- blu
+INSERT INTO `traits` VALUES (18,'dual wield',16,1,1,259,10,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',16,25,2,259,15,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',16,50,3,259,25,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',16,70,3,259,30,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',16,75,4,259,40,NULL,0);
+-- cor
+INSERT INTO `traits` VALUES (18,'dual wield',17,1,1,259,10,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',17,25,2,259,15,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',17,50,3,259,25,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',17,70,3,259,30,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',17,75,4,259,40,NULL,0);
+-- pup
+INSERT INTO `traits` VALUES (18,'dual wield',18,1,1,259,10,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',18,25,2,259,15,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',18,50,3,259,25,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',18,70,3,259,30,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',18,75,4,259,40,NULL,0);
+-- dnc
+INSERT INTO `traits` VALUES (18,'dual wield',19,1,1,259,10,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',19,25,2,259,15,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',19,50,3,259,25,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',19,70,3,259,30,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',19,75,4,259,40,NULL,0);
+-- sch
+INSERT INTO `traits` VALUES (18,'dual wield',20,1,1,259,10,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',20,25,2,259,15,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',20,50,3,259,25,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',20,70,3,259,30,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',20,75,4,259,40,NULL,0);
+-- geo
+INSERT INTO `traits` VALUES (18,'dual wield',21,1,1,259,10,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',21,25,2,259,15,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',21,50,3,259,25,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',21,70,3,259,30,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',21,75,4,259,40,NULL,0);
+-- run
+INSERT INTO `traits` VALUES (18,'dual wield',22,1,1,259,10,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',22,25,2,259,15,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',22,50,3,259,25,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',22,70,3,259,30,NULL,0);
+INSERT INTO `traits` VALUES (18,'dual wield',22,75,4,259,40,NULL,0);
 INSERT INTO `traits` VALUES (19,'treasure hunter',6,15,1,303,1,NULL,0);
 INSERT INTO `traits` VALUES (20,'gilfinder',6,5,1,897,50,NULL,0);
 INSERT INTO `traits` VALUES (21,'alertness',11,5,1,0,0,NULL,0);

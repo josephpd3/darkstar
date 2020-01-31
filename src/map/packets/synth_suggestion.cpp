@@ -50,19 +50,6 @@ CSynthSuggestionPacket::CSynthSuggestionPacket(uint32 synthID)
 		fmtQuery,
 		synthID);
 
-	/*
-	static const std::unordered_map<char, vector<char>> num_chars = {
-    {'2', {'a', 'b', 'c'}},
-    {'3', {'e', 'd', 'f'}},
-    {'4', {'g', 'h', 'i'}},
-    {'5', {'j', 'k', 'l'}},
-    {'6', {'m', 'n', 'o'}},
-    {'7', {'p', 'q', 'r', 's'}},
-    {'8', {'t', 'u', 'v'}},
-    {'9', {'w', 'x', 'y', 'z'}}
-};
-	*/
-
 	static const std::unordered_map<uint16, int> ingredientColumnToAmountByteMap = {
 		{11, 0x20},
 		{12, 0x22},
@@ -107,6 +94,9 @@ CSynthSuggestionPacket::CSynthSuggestionPacket(uint32 synthID)
 			for (uint16 other_col = 11; other_col < 19; other_col++)
 			{
 				if (ingredientID == Sql_GetUIntData(SqlHandle, (size_t)other_col))
+					// Skip this item if we've seen it in a lesser indexed column
+					if (col > other_col)
+						continue;
 					itemAmount++;
 			}
 			ref<uint16>(columnAmountByte) = itemAmount;
