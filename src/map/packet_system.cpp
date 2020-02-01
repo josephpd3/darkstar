@@ -2633,9 +2633,102 @@ void SmallPacket0x053(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 
 void SmallPacket0x058(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
 {
-    // uint16 skillID = data.ref<uint16>(0x04);
-    // uint16 skillLevel = data.ref<uint16>(0x06);
-    //PChar->pushPacket(new CSynthSuggestionPacket(recipeID));
+    // TODO: Suggest recipes with subcraft requirements once a sufficient level in primary craft is reached to diversify suggestions given
+
+    // ID from packet is guild ID, not skill ID, so we need to map accordingly
+    uint16 guildSkillColumns[] = {7, 6, 4, 8, 3, 5, 2, 1};
+    std::string guildSkillColumnNames[] = {
+        "Alchemy",
+        "Bone",
+        "Cloth",
+        "Cook",
+        "Gold",
+        "Leather",
+        "Smith",
+        "Wood"
+    };
+
+    uint16 guildID = data.ref<uint16>(0x04);
+    uint16 skillLevel = data.ref<uint16>(0x06);
+
+    ShowDebug(CL_CYAN"SmallPacket0x058: Looking up synthesis suggestions for character %s for guildID %u and skillLevel %u\n" CL_RESET, PChar->GetName(), guildID, skillLevel);
+
+    std::string query = "SELECT ID FROM synth_recipes WHERE ";
+
+    // Iter util vars
+    uint16 levelCapForSkill;
+    std::string skillColumnName;
+
+    // Construct query for recipes
+    for (auto i = 0; i < 8; i++)
+    {
+        skillColumnName = guildSkillColumnNames[i];
+
+        if (guildSkillColumns[i] == guildID)
+        {
+            levelCapForSkill = skillLevel + 10;
+
+            // We want an item below cap, but above level 0 for the current guild, which keeps weird, special recipes of all 0 requirements out of the pecking order
+            query += fmt::sprintf(
+                "%s <= %s",
+                (const int8*)skillColumnName.c_str(),
+                (const int8*)std::to_string(levelCapForSkill).c_str()
+            );
+            query += fmt::sprintf(
+                " AND %s > 0",
+                (const int8*)skillColumnName.c_str()
+            );
+        }
+        else
+        {
+            levelCapForSkill = 0;
+
+            query += fmt::sprintf(
+                "%s <= %s",
+                (const int8*)skillColumnName.c_str(),
+                (const int8*)std::to_string(levelCapForSkill).c_str()
+            );
+        }
+
+        if (i < 7)
+            query += " AND ";
+    }
+
+    query += ";";
+
+
+    ShowDebug(CL_CYAN"SUBMITTING QUERY" CL_RESET);
+
+    int32 ret = Sql_QueryStr(SqlHandle, query.c_str());
+
+    uint16 recipeID;
+
+    if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) > 0)
+    {
+        uint64 numRows = Sql_NumRows(SqlHandle);
+
+        ShowDebug(CL_CYAN"SmallPacket0x058: Found %u recipe suggestions for character %s\n" CL_RESET, numRows, PChar->GetName());
+
+        uint64 recipeToSuggest = dsprand::GetRandomNumber(numRows);
+
+        for (uint64 i; i < numRows; i++)
+        {
+            if (Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+            {
+                if (i == recipeToSuggest)
+                {
+                    recipeID = Sql_GetUIntData(SqlHandle, 0);
+                    break;
+                }
+            }
+        }
+    }
+    else
+    {
+        ShowError(CL_RED"SmallPacket0x058: Failed to retrieve suggestions from database" CL_RESET);
+    }
+
+    PChar->pushPacket(new CSynthSuggestionPacket(recipeID));
 }
 
 /************************************************************************
