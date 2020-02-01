@@ -1389,6 +1389,7 @@ void CBattleEntity::OnDisengage(CAttackState& s)
     m_battleTarget = 0;
     if (animation == ANIMATION_ATTACK)
     {
+        ShowDebug(CL_CYAN"Setting animation for entity %s to ANIMATION_NONE on disengage\n" CL_RESET, name);
         animation = ANIMATION_NONE;
     }
     updatemask |= UPDATE_HP;
