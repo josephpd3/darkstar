@@ -179,7 +179,7 @@ void CAutomatonController::DoCombatTick(time_point tick)
 
     if (TryDeaggro())
     {
-        ShowDebug(CL_CYAN"%s disengaging from %s on Deaggro from combat tick.\n" CL_RESET, PChar->GetName(), PTarget->GetName());
+        ShowDebug(CL_CYAN"Character disengaging from %s on Deaggro from combat tick.\n" CL_RESET, PTarget->GetName());
         Disengage();
         return;
     }
