@@ -648,13 +648,14 @@ bool CCharEntity::CanAttack(CBattleEntity* PTarget, std::unique_ptr<CBasicPacket
     if (!IsMobOwner(PTarget))
     {
         errMsg = std::make_unique<CMessageBasicPacket>(this, PTarget, 0, 0, MSGBASIC_ALREADY_CLAIMED);
-
+        ShowDebug(CL_CYAN"Character disengaging from mob %s as char is not the owner of target\n" CL_RESET, PTarget->GetName());
         PAI->Disengage();
         return false;
     }
     else if (dist > 30)
     {
         errMsg = std::make_unique<CMessageBasicPacket>(this, PTarget, 0, 0, MSGBASIC_LOSE_SIGHT);
+        ShowDebug(CL_CYAN"Character disengaging from mob %s as char is not close enough to target\n" CL_RESET, PTarget->GetName());
         PAI->Disengage();
         return false;
     }
